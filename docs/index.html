@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111a38">
+  <meta name="description" content="Play Coin Runner, a code-drawn platform adventure, in your browser.">
+  <title>Coin Runner — Browser Edition</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="game-header">
+      <div>
+        <p class="eyebrow">Browser edition</p>
+        <h1>Coin Runner</h1>
+      </div>
+      <div class="header-actions">
+        <button id="soundButton" class="icon-button" type="button" aria-label="Mute sound" title="Mute sound">Sound on</button>
+        <button id="helpButton" class="icon-button" type="button">How to play</button>
+      </div>
+    </header>
+
+    <section class="stage" aria-label="Coin Runner game">
+      <canvas id="gameCanvas" width="960" height="560" tabindex="0" aria-label="Coin Runner. Use arrow keys or A and D to move, and Space, Up, or W to jump."></canvas>
+      <div id="overlay" class="overlay">
+        <div class="panel">
+          <p id="overlayKicker" class="eyebrow">Three levels. One tiny hero.</p>
+          <h2 id="overlayTitle">Ready to run?</h2>
+          <p id="overlayText">Collect coins, stomp trouble, dodge hazards, and make it to the flag.</p>
+          <div class="button-row">
+            <button id="primaryButton" class="primary" type="button">Start game</button>
+            <button id="secondaryButton" class="secondary hidden" type="button">Restart game</button>
+          </div>
+          <p id="bestScore" class="best-score">Best score: 0</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mobile-controls" aria-label="Touch controls">
+      <div class="direction-pad">
+        <button class="touch-button" data-control="left" type="button" aria-label="Move left">&#9664;</button>
+        <button class="touch-button" data-control="right" type="button" aria-label="Move right">&#9654;</button>
+      </div>
+      <button class="touch-button jump-button" data-control="jump" type="button" aria-label="Jump">Jump</button>
+    </section>
+
+    <footer>
+      <span><kbd>A</kbd> <kbd>D</kbd> or arrows to move</span>
+      <span><kbd>Space</kbd> / <kbd>W</kbd> / <kbd>↑</kbd> to jump</span>
+      <span><kbd>P</kbd> pause · <kbd>M</kbd> sound</span>
+    </footer>
+  </main>
+
+  <dialog id="helpDialog">
+    <form method="dialog">
+      <button class="dialog-close" aria-label="Close help">×</button>
+      <p class="eyebrow">Field guide</p>
+      <h2>How to play</h2>
+      <div class="help-grid">
+        <div><b>Move</b><span>Arrow keys or A / D</span></div>
+        <div><b>Jump</b><span>Space, Up, or W. Hold for extra height.</span></div>
+        <div><b>Goal</b><span>Collect coins and reach the red flag.</span></div>
+        <div><b>Hazards</b><span>Stomp enemies. Avoid their sides, spikes, and pits.</span></div>
+      </div>
+      <p>Press P or Escape to pause. Your best score is saved in this browser.</p>
+      <button class="primary" value="close">Got it</button>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>

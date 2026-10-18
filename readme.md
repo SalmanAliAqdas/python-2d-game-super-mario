@@ -1,112 +1,134 @@
-# Coin Runner: a 2D Platform Game in Python
+# Coin Runner
 
-A simple 2D platform game made with Python and pygame. Run, jump, collect coins, stomp enemies, dodge spikes, and reach the flag at the end of each of the three levels.
+Coin Runner is an original, code-drawn 2D platform game available in two editions: a Python/pygame desktop game and a browser version built with HTML5 Canvas, CSS, and JavaScript. Run, jump, collect coins, stomp enemies, avoid hazards, and reach the flag across three scrolling levels.
 
-![Menu](screenshots/menu.png)
-![Level 1](screenshots/level1-meadow.png)
-![Level 2](screenshots/level2-caves.png)
-![Level 3](screenshots/level3-sky.png)
+No third-party character art, music, or proprietary game assets are included. Both editions draw their visuals in code and generate simple sound effects at runtime.
 
-## Features
-- 3 hand-built levels with scrolling camera: Sunny Meadow, Crystal Caves, Sky Islands
-- Smooth platformer physics: variable-height jumps, "coyote time" (a late jump still works just after leaving a ledge) and jump buffering (an early jump press still counts)
-- Coins, walking enemies you can stomp, spikes, pits, and a goal flag
-- 3 lives, invulnerability after a hit, and a return to safe ground after falling into a pit
-- Score, bonus for collecting every coin, and a saved high score
-- Pause, restart level, mute, and an in-game help screen
-- Sound effects generated in code, so no sound files are needed (the game stays silent if there is no sound device)
-- No image files either: everything is drawn with code
-- Levels are drawn as text, so they are easy to edit
-- Automated tests (43), including a check that every level can be finished
+![Coin Runner menu](screenshots/menu.png)
 
-## Requirements
+## Play in a browser
+
+The web game lives in `docs/` and needs no build step, backend, database, API key, or paid service.
+
+To preview it locally, start an HTTP server from the repository root:
+
+```bash
+python -m http.server 8000
+```
+
+Then open <http://localhost:8000/docs/>. On Windows, `py -m http.server 8000` works if `python` is not recognized. Opening `docs/index.html` directly may work, but an HTTP server matches GitHub Pages more closely.
+
+### Deploy with GitHub Pages
+
+1. Push the repository to GitHub.
+2. Open the repository's **Settings → Pages**.
+3. Under **Build and deployment**, select **Deploy from a branch**.
+4. Select the publishing branch (usually `main`), choose `/docs` as the folder, and save.
+5. GitHub will display the public URL after deployment finishes.
+
+All web paths are relative, so the game works at a repository URL such as `https://username.github.io/repository/`.
+
+## Run the Python desktop edition
+
+Requirements:
+
 - Python 3.10 or newer
-- pygame-ce (the community edition of pygame, which also supports the newest Python versions)
+- `pygame-ce` 2.5 or newer
 
-Install it with:
-```
+Install and run:
+
+```bash
 pip install -r requirements.txt
-```
-Do not install both `pygame` and `pygame-ce` together. They conflict. If you already installed `pygame`, run `pip uninstall pygame` first.
-
-## How to run
-```
 python platformer.py
 ```
-If `python` is not recognized on Windows, use `py platformer.py`.
+
+On Windows, use `py` instead of `python` if needed. Do not install `pygame` and `pygame-ce` together because they provide the same module and can conflict.
 
 ## Controls
-| Key | Action |
-|---|---|
-| Left / Right arrows, or A / D | move |
-| Space, Up arrow, or W | jump (hold for a higher jump, tap for a hop) |
-| P or Esc | pause (Esc quits from the menu) |
-| R (while paused) | restart the level |
-| Q (while paused) | back to the menu |
-| H | help (menu or pause screen) |
-| M | mute or unmute sound |
-| Enter or Space | confirm on menus |
 
-## Rules
-- Reach the flag to finish a level. The pole is tall, so you cannot jump over it.
-- Each coin is worth 10 points, each defeated enemy 100, each finished level 200, and collecting every coin in a level gives a 300 bonus.
-- Jump on an enemy from above to defeat it. Touching it from the side, or touching spikes, costs a life.
-- Falling into a pit costs a life and puts you back on the last safe ground.
-- After a hit you flash and cannot be hurt for 1.5 seconds.
-- Lose all 3 lives and the game is over. Your lives and score carry over between levels.
+| Action | Desktop keyboard | Browser touch |
+|---|---|---|
+| Move | Left/Right arrows or A/D | Left/Right buttons |
+| Jump | Space, Up, or W; hold for more height | Jump button; hold for more height |
+| Pause/resume | P or Escape | Pause overlay appears when focus is lost |
+| Restart level | R from the desktop pause screen; button in browser pause/completion overlay | Restart level button |
+| Help | H on the desktop menu/pause screen; **How to play** in browser | **How to play** button |
+| Sound | M | Sound button |
+| Confirm | Enter or Space | On-screen buttons |
 
-## Tips
-- Hold the jump key for a full jump (about 3 tiles high) and tap it for a small hop.
-- You can still jump for a split second after running off a ledge.
-- Collect coins along the way, because many are placed to show you where to jump.
+## Features and rules
 
-## Running the tests
-```
+- Three levels: Sunny Meadow, Crystal Caves, and Sky Islands
+- Scrolling camera and responsive Canvas presentation
+- Variable-height jumping, coyote time, and jump buffering
+- Coins, patrolling enemies, spikes, pits, and goal flags
+- Three lives, temporary invulnerability after damage, knockback, and safe-ground recovery after falls
+- 10 points per coin, 100 per enemy, 200 per completed level, and a 300-point all-coins bonus
+- Score and lives carry between levels
+- Persistent high score (`highscore.json` on desktop and browser `localStorage` on the web)
+- Generated sound effects with mute support
+- Keyboard controls in both editions and touch controls in the browser edition
+- Start, pause, restart, level-complete, game-over, and victory states
+
+## Tests
+
+Run the Python suite from the repository root:
+
+```bash
 python -m unittest -v
 ```
-The tests need no window or sound device. They check the physics (gravity, walls, jumping, coyote time, head bumps), the rules (coins, spikes, enemies, pits, flag, game over), the level maps, the high score file, the sound generator, and every game screen. They also play back a recorded winning run on every level, which proves each level can be finished.
 
-## Changing or adding levels
-Levels live in `levels.py` and are drawn as text. Every character is one tile:
+The suite checks physics, collisions, jumping assists, hazards, enemies, scoring, game flow, rendering, sound generation, level validation, and recorded playability runs. To also run the slower live solver test:
+
+```bash
+RUN_SLOW_TESTS=1 python -m unittest -v
+```
+
+On PowerShell, set the variable first with `$env:RUN_SLOW_TESTS = "1"`.
+
+The browser edition is static and dependency-free. Its JavaScript can be syntax-checked with:
+
+```bash
+node --check docs/js/game.js
+```
+
+## Editing levels
+
+Desktop levels are defined as 14-row text maps in `levels.py`. The browser port mirrors those maps in `docs/js/game.js`.
 
 | Symbol | Meaning |
 |---|---|
-| `.` | empty space |
-| `#` | solid ground or platform |
-| `o` | coin |
-| `^` | spikes |
-| `E` | walking enemy |
-| `P` | player start (exactly one) |
-| `F` | goal flag (exactly one) |
+| `.` | Empty space |
+| `#` | Solid ground or platform |
+| `o` | Coin |
+| `^` | Spikes |
+| `E` | Walking enemy |
+| `P` | Player start (exactly one) |
+| `F` | Goal flag (exactly one) |
 
-Every level has exactly 14 rows, and all rows must have the same length. After you edit or add a level, run:
-```
-python solver.py
-```
-A computer player tries to finish every level using the real game physics. If it can, it saves the winning runs in `replays.json`, and the tests will pass. If it cannot, your level may be too hard or impossible.
-
-## How it works
-- `world.py` holds the game rules and physics, with no drawing, so it can be tested automatically
-- `levels.py` holds the level maps
-- `platformer.py` holds the window, controls, drawing, sound, menus and high score
-- `solver.py` is a computer player that looks ahead using the real physics, to check that levels are possible
-- The game runs at 60 frames per second
+After changing Python levels, run `python solver.py` to regenerate playable runs, then run the test suite. Mirror intentional map changes into the web edition so both versions remain aligned.
 
 ## Project structure
-- `platformer.py`: the game (run this file)
-- `world.py`: physics and rules
-- `levels.py`: the three levels
-- `solver.py`: level playability checker
-- `replays.json`: recorded winning runs used by the tests
-- `test_platformer.py`: automated tests
-- `requirements.txt`: the packages to install
-- `screenshots/`: pictures used in this README
-- `.gitignore`: files Git should ignore (the saved high score is not uploaded)
-- `readme.md`: this file
 
-## Possible future improvements
-- More levels, moving platforms, and checkpoints
-- Better artwork and music
-- A level editor
-- Gamepad support
-- A packaged `.exe` so people can play without installing Python
+```text
+docs/
+  index.html       GitHub Pages entry point
+  css/style.css    Responsive page, overlays, and touch controls
+  js/game.js       Canvas renderer, game rules, input, and Web Audio
+platformer.py      Desktop rendering, menus, controls, and sound
+world.py           Testable desktop physics and game rules
+levels.py          Desktop level maps
+solver.py          Automated level playability solver
+replays.json       Recorded winning runs used by tests
+test_platformer.py Python automated tests
+requirements.txt  Desktop dependency
+screenshots/       Desktop screenshots
+```
+
+## Implementation notes
+
+The browser edition closely follows the desktop constants and rules but is a JavaScript port rather than a Python runtime in the browser. Audio uses Web Audio oscillators instead of pygame's generated sample buffers. Browser high scores are stored per browser and origin, so they do not synchronize with the desktop `highscore.json` file or between devices.
+
+## License and assets
+
+Coin Runner uses original geometric artwork generated by its own rendering code. No Nintendo or Mario artwork, audio, names, or other copyrighted franchise assets are included. Review and add an explicit repository license before redistributing the source if the project does not already have one.
