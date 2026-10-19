@@ -62,7 +62,90 @@ LEVEL_3 = [
 ]
 
 LEVELS = [
-    {"name": "Sunny Meadow", "rows": LEVEL_1},
-    {"name": "Crystal Caves", "rows": LEVEL_2},
-    {"name": "Sky Islands", "rows": LEVEL_3},
+    {"name": "Beginner Meadow", "palette": "meadow", "rows": LEVEL_1},
+    {"name": "Forest Adventure", "palette": "forest", "rows": LEVEL_2},
+    {"name": "Mountain Path", "palette": "mountain", "rows": LEVEL_3},
+]
+
+
+def make_stage(name, palette, width, gaps=(), platforms=(), spikes=(), enemies=(),
+               ceilings=(), **features):
+    """Author a stage in tile coordinates; browser-only features have safe static routes.
+
+    Platforms/ceilings: (first column, exclusive last column, row).
+    Gaps: (first column, exclusive last column). All jumps use the existing physics.
+    """
+    grid = [["."] * width for _ in range(14)]
+    for c in range(width):
+        if not any(a <= c < b for a, b in gaps):
+            grid[12][c] = grid[13][c] = "#"
+    for a, b, r in (*platforms, *ceilings):
+        for c in range(a, b):
+            grid[r][c] = "#"
+    # Coin trails on the main route and above alternate platforms.
+    for c in range(5, width - 5, 3):
+        if grid[11][c] == ".":
+            grid[11][c] = "o"
+    for a, b, r in platforms:
+        for c in range(a, b):
+            if grid[r - 1][c] == ".":
+                grid[r - 1][c] = "o"
+    for c, r in spikes:
+        grid[r][c] = "^"
+    for c, r in enemies:
+        grid[r][c] = "E"
+    grid[11][2], grid[11][width - 3] = "P", "F"
+    return dict(name=name, palette=palette, rows=["".join(row) for row in grid], **features)
+
+
+LEVELS += [
+    make_stage("Underground Cave", "cave", 90,
+               gaps=[(25, 28), (59, 62)],
+               platforms=[(12, 17, 10), (35, 40, 10), (70, 75, 9)],
+               ceilings=[(4, 20, 6), (31, 52, 6), (66, 82, 5)],
+               spikes=[(45, 11), (46, 11)], enemies=[(21, 11), (78, 11)],
+               hazards=[dict(x=1540, y=320, range=70, speed=1.4, kind="saw")]),
+    make_stage("Desert Journey", "desert", 100,
+               gaps=[(20, 24), (47, 51), (76, 80)],
+               platforms=[(10, 14, 10), (32, 36, 10), (59, 64, 9), (85, 89, 10)],
+               spikes=[(39, 11), (66, 11)], enemies=[(28, 11), (89, 11)],
+               movers=[dict(x=760, y=430, w=100, range=85, speed=1.2),
+                       dict(x=2960, y=420, w=100, range=85, speed=1.0)]),
+    make_stage("Snowy Mountains", "snow", 106,
+               gaps=[(23, 26), (53, 56), (82, 85)],
+               platforms=[(11, 17, 10), (34, 39, 9), (64, 70, 10), (91, 96, 9)],
+               spikes=[(43, 11), (74, 11)], enemies=[(30, 11), (97, 11)], ice=True),
+    make_stage("Haunted Castle", "haunted", 112,
+               gaps=[(27, 31), (70, 74)],
+               platforms=[(10, 16, 10), (21, 25, 8), (37, 43, 10),
+                          (46, 51, 8), (54, 60, 8), (82, 88, 10), (92, 97, 8)],
+               ceilings=[(36, 65, 5)],
+               spikes=[(61, 11), (62, 11), (99, 11)],
+               enemies=[(18, 11), (78, 11), (104, 11)],
+               hazards=[dict(x=2020, y=296, range=0, speed=1, kind="flame")]),
+    make_stage("Sky Islands", "sky", 118,
+               gaps=[(18, 22), (42, 46), (66, 70), (92, 96)],
+               platforms=[(9, 14, 10), (26, 31, 10), (33, 38, 8),
+                          (49, 54, 10), (57, 62, 8), (74, 79, 10),
+                          (82, 87, 8), (100, 105, 10)],
+               spikes=[(109, 11)], enemies=[(36, 7), (85, 7)],
+               movers=[dict(x=1640, y=420, w=100, range=85, speed=1.1)]),
+    make_stage("Lava Fortress", "lava", 124,
+               gaps=[(20, 24), (46, 50), (74, 78), (102, 106)],
+               platforms=[(10, 15, 10), (30, 36, 10), (56, 62, 9),
+                          (85, 91, 10), (111, 116, 9)],
+               spikes=[(39, 11), (65, 11), (95, 11)],
+               enemies=[(28, 11), (82, 11), (115, 11)],
+               movers=[dict(x=2880, y=420, w=100, range=90, speed=1.4)],
+               hazards=[dict(x=1680, y=440, range=0, speed=1, kind="flame"),
+                        dict(x=3500, y=300, range=80, speed=1.3, kind="saw")]),
+    make_stage("Final Castle", "castle", 134,
+               gaps=[(22, 26), (50, 54), (80, 84), (108, 112)],
+               platforms=[(10, 16, 10), (33, 39, 10), (42, 47, 8),
+                          (61, 67, 9), (89, 95, 10), (98, 103, 8), (118, 124, 10)],
+               ceilings=[(60, 74, 5), (116, 128, 5)],
+               spikes=[(72, 11), (73, 11), (102, 11)],
+               enemies=[(30, 11), (58, 11), (88, 11), (126, 11)],
+               hazards=[dict(x=2700, y=300, range=80, speed=1.5, kind="saw"),
+                        dict(x=4160, y=440, range=0, speed=1, kind="flame")]),
 ]

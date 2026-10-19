@@ -47,6 +47,14 @@ def make_plans():
             plans.append(frames)
     # stand still variants (to wait for an enemy to pass)
     plans.append([(0, False, False)] * LOOKAHEAD_FRAMES)
+    # Late jumps can clear an obstacle after walking beneath an overhead ledge.
+    for delay in (6, 12, 18, 24, 32, 40, 48, 60):
+        for hold in (10, 24, 40):
+            plans.append([(1, i == delay, delay <= i < delay + hold)
+                          for i in range(LOOKAHEAD_FRAMES)])
+    for retreat in (8, 16, 24):
+        plans.append([(-1 if i < retreat else 1, i == retreat, retreat <= i < retreat + 24)
+                      for i in range(LOOKAHEAD_FRAMES)])
     return plans
 
 
@@ -108,8 +116,15 @@ def replay(level_index, packed):
 
 def record_all():
     """Solve every level and save the winning runs, so tests can replay them quickly."""
-    data = {}
+    try:
+        with open(REPLAY_FILE, encoding="utf-8") as file:
+            data = json.load(file)
+    except (OSError, ValueError):
+        data = {}
     for i, level in enumerate(levels.LEVELS):
+        if level["name"] in data and replay(i, data[level["name"]]).status == "complete":
+            print(f"{level['name']}: existing winning run verified")
+            continue
         w, script = solve(i)
         print(f"{level['name']}: {w.status}  time {w.time:.1f}s  lives left {w.lives}  "
               f"coins {w.coins_collected}/{w.total_coins}")
@@ -117,6 +132,8 @@ def record_all():
             print("  This level could not be finished by the computer player. It may be too hard or impossible.")
             return False
         data[level["name"]] = compress(script)
+        with open(REPLAY_FILE, "w", encoding="utf-8") as file:
+            json.dump(data, file)
     with open(REPLAY_FILE, "w", encoding="utf-8") as file:
         json.dump(data, file)
     print(f"Saved {REPLAY_FILE}")

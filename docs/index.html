@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#111a38">
   <meta name="description" content="Play Coin Runner, a code-drawn platform adventure, in your browser.">
   <title>Coin Runner — Browser Edition</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,6 +17,9 @@
         <h1>Coin Runner</h1>
       </div>
       <div class="header-actions">
+        <button id="levelsButton" class="icon-button" type="button">Levels</button>
+        <button id="pauseButton" class="icon-button" type="button" aria-label="Pause or resume game">Pause</button>
+        <button id="restartButton" class="icon-button" type="button">Restart</button>
         <button id="soundButton" class="icon-button" type="button" aria-label="Mute sound" title="Mute sound">Sound on</button>
         <button id="helpButton" class="icon-button" type="button">How to play</button>
       </div>
@@ -25,7 +29,7 @@
       <canvas id="gameCanvas" width="960" height="560" tabindex="0" aria-label="Coin Runner. Use arrow keys or A and D to move, and Space, Up, or W to jump."></canvas>
       <div id="overlay" class="overlay">
         <div class="panel">
-          <p id="overlayKicker" class="eyebrow">Three levels. One tiny hero.</p>
+          <p id="overlayKicker" class="eyebrow">Ten stages. A whole adventure.</p>
           <h2 id="overlayTitle">Ready to run?</h2>
           <p id="overlayText">Collect coins, stomp trouble, dodge hazards, and make it to the flag.</p>
           <div class="button-row">
@@ -36,6 +40,8 @@
         </div>
       </div>
     </section>
+
+    <p class="orientation-tip">Landscape gives you a larger view. You can also play in portrait.</p>
 
     <section class="mobile-controls" aria-label="Touch controls">
       <div class="direction-pad">
@@ -63,8 +69,19 @@
         <div><b>Goal</b><span>Collect coins and reach the red flag.</span></div>
         <div><b>Hazards</b><span>Stomp enemies. Avoid their sides, spikes, and pits.</span></div>
       </div>
-      <p>Press P or Escape to pause. Your best score is saved in this browser.</p>
+      <p>Hold a movement button and Jump together on touchscreens. Pause and Restart are above the game. Green pennants mark safe recovery points. Cyan platforms move; orange traps flash before activating. Snow has momentum. Press P or Escape to pause. Unlocked levels and your best score are saved in this browser when storage is available.</p>
       <button class="primary" value="close">Got it</button>
+    </form>
+  </dialog>
+
+  <dialog id="levelDialog" aria-labelledby="levelTitle">
+    <form method="dialog">
+      <button class="dialog-close" aria-label="Close level selection">&times;</button>
+      <p class="eyebrow">Choose your trail</p>
+      <h2 id="levelTitle">Ten adventures</h2>
+      <p>Reach each flag to unlock the next stage. Replays start with three lives.</p>
+      <div id="levelGrid" class="level-grid"></div>
+      <button id="resetButton" class="secondary" type="button">Reset progress</button>
     </form>
   </dialog>
 

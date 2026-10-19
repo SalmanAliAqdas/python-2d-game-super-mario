@@ -357,5 +357,6 @@ class World:
         if self.total_coins > 0 and self.coins_collected == self.total_coins:
             self.level_bonus += ALL_COINS_BONUS
         self.score += self.level_bonus
+        self.lives = min(START_LIVES, self.lives + 1)
         self.status = "complete"
         self.events.append("complete")

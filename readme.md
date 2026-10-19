@@ -1,134 +1,138 @@
 # Coin Runner
 
-Coin Runner is an original, code-drawn 2D platform game available in two editions: a Python/pygame desktop game and a browser version built with HTML5 Canvas, CSS, and JavaScript. Run, jump, collect coins, stomp enemies, avoid hazards, and reach the flag across three scrolling levels.
+An original, code-drawn platform adventure with ten scrolling levels. The browser edition uses JavaScript, HTML5 Canvas, CSS and Web Audio. The Python desktop edition uses pygame-ce. Neither edition requires paid services or third-party artwork.
 
-No third-party character art, music, or proprietary game assets are included. Both editions draw their visuals in code and generate simple sound effects at runtime.
+## Play locally
 
-![Coin Runner menu](screenshots/menu.png)
+From the repository root:
 
-## Play in a browser
-
-The web game lives in `docs/` and needs no build step, backend, database, API key, or paid service.
-
-To preview it locally, start an HTTP server from the repository root:
-
-```bash
+```sh
 python -m http.server 8000
 ```
 
-Then open <http://localhost:8000/docs/>. On Windows, `py -m http.server 8000` works if `python` is not recognized. Opening `docs/index.html` directly may work, but an HTTP server matches GitHub Pages more closely.
+Open **http://localhost:8000/docs/**. On Windows, `py` can replace `python`. Use HTTP rather than opening the HTML file directly because the browser game uses JavaScript modules. The web game requires no packages or build step.
 
-### Deploy with GitHub Pages
+For the separate desktop edition (Python 3.10+):
 
-1. Push the repository to GitHub.
-2. Open the repository's **Settings → Pages**.
-3. Under **Build and deployment**, select **Deploy from a branch**.
-4. Select the publishing branch (usually `main`), choose `/docs` as the folder, and save.
-5. GitHub will display the public URL after deployment finishes.
-
-All web paths are relative, so the game works at a repository URL such as `https://username.github.io/repository/`.
-
-## Run the Python desktop edition
-
-Requirements:
-
-- Python 3.10 or newer
-- `pygame-ce` 2.5 or newer
-
-Install and run:
-
-```bash
-pip install -r requirements.txt
+```sh
+python -m pip install -r requirements.txt
 python platformer.py
 ```
 
-On Windows, use `py` instead of `python` if needed. Do not install `pygame` and `pygame-ce` together because they provide the same module and can conflict.
+## Features
+
+- Ten distinct tile maps, collectible coins, enemies, spikes, pits and clear finish flags.
+- Variable-height jumps, jump buffering, coyote time and safe-ground recovery checkpoints.
+- Browser moving platforms, cycling traps, moving hazards, snow momentum and smooth camera following.
+- Three lives, enemy stomping, damage recovery, generated sounds and a saved best score.
+- Start, pause, resume, restart, game over, level complete and final victory screens.
+- Browser level selection, sequential unlocking, replay and local progress saving.
+- Responsive presentation, large multitouch controls and mobile safe-area spacing.
+
+## The ten levels
+
+| Level | Name | Route and challenges |
+| --- | --- | --- |
+| 1 | Beginner Meadow | Original Sunny Meadow map; running, coins and introductory gaps. |
+| 2 | Forest Adventure | Original Crystal Caves map; stepping platforms and enemies, with forest colors in the browser. |
+| 3 | Mountain Path | Original Sky Islands map; a demanding elevated route, now with mountain colors. |
+| 4 | Underground Cave | Low ceilings, tunnels, ledges and a moving overhead hazard. |
+| 5 | Desert Journey | Separated dunes, four-tile gaps and moving assistance platforms. |
+| 6 | Snowy Mountains | Alternating ledges and gaps; momentum requires earlier braking. |
+| 7 | Haunted Castle | A lower corridor and hidden upper coin route, enemies and a cycling trap. |
+| 8 | Sky Islands | Floating upper platforms, repeated gaps and vertical coin routes. |
+| 9 | Lava Fortress | Gaps, spikes, a moving platform and timed flame traps. |
+| 10 | Final Castle | A longer final gauntlet combining elevated paths, enemies and traps. |
+
+The original three tile layouts are preserved exactly. Their display names/themes match the new progression; their original difficulty is retained. Every map has a safe start, coins, enemies and a flag. The desktop edition plays the same ten tile maps with its existing static physics and visuals. Moving platforms, timed hazards, ice physics, themed backgrounds and level selection are browser enhancements. Safe static routes remain available in the desktop maps. The existing enemy architecture has no boss system; the final stage uses a gauntlet rather than a boss encounter.
 
 ## Controls
 
-| Action | Desktop keyboard | Browser touch |
-|---|---|---|
-| Move | Left/Right arrows or A/D | Left/Right buttons |
-| Jump | Space, Up, or W; hold for more height | Jump button; hold for more height |
-| Pause/resume | P or Escape | Pause overlay appears when focus is lost |
-| Restart level | R from the desktop pause screen; button in browser pause/completion overlay | Restart level button |
-| Help | H on the desktop menu/pause screen; **How to play** in browser | **How to play** button |
-| Sound | M | Sound button |
-| Confirm | Enter or Space | On-screen buttons |
+| Action | Keyboard | Touchscreen |
+| --- | --- | --- |
+| Move | Left / A, Right / D | Hold the left or right arrow at bottom left |
+| Jump | Space / Up / W; hold for height | Hold Jump at bottom right, together with movement |
+| Pause / Resume | P / Escape | Pause above the game, then Resume |
+| Restart level | Browser Restart button; desktop R while paused | Restart above the game or in the pause panel |
+| Select unlocked level | Browser Levels button | Levels above the game |
+| Sound | M or Sound button | Sound button |
+| Help | Browser How to play; desktop H | How to play |
 
-## Features and rules
+Pointer capture tracks each finger independently, including release outside a button, cancellation and lost capture. Pausing, opening a menu, hiding the page or losing focus clears held inputs. Control buttons suppress scrolling and touch gestures locally; browser zoom is not globally disabled. Snow retains physical momentum briefly after input is released.
 
-- Three levels: Sunny Meadow, Crystal Caves, and Sky Islands
-- Scrolling camera and responsive Canvas presentation
-- Variable-height jumping, coyote time, and jump buffering
-- Coins, patrolling enemies, spikes, pits, and goal flags
-- Three lives, temporary invulnerability after damage, knockback, and safe-ground recovery after falls
-- 10 points per coin, 100 per enemy, 200 per completed level, and a 300-point all-coins bonus
-- Score and lives carry between levels
-- Persistent high score (`highscore.json` on desktop and browser `localStorage` on the web)
-- Generated sound effects with mute support
-- Keyboard controls in both editions and touch controls in the browser edition
-- Start, pause, restart, level-complete, game-over, and victory states
+Green pennants show recovery checkpoints. Cyan platforms move. Orange hazards cycle between a warning and an active phase. Reach the red flag to complete a stage. Coins give 10 points, enemies 100, completion 200 and collecting every coin adds 300. Score and remaining lives carry forward. Each completed flag restores one life, capped at three. Replaying an unlocked level starts a fresh run with three lives; Restart restores that level's entry score and lives.
 
-## Tests
+## Progress
 
-Run the Python suite from the repository root:
+The browser saves unlocked levels and best score in `localStorage`, per browser and origin. It migrates the original browser best score. Invalid or unavailable storage falls back to playable in-memory progress. **Levels ? Reset progress** asks for confirmation before resetting browser progress. No personal data is stored. Desktop retains its existing `highscore.json` behavior.
 
-```bash
+## Browser compatibility and layout
+
+Targets modern Android Chrome, iPhone Safari, Chrome, Edge and Firefox with Canvas, ES modules, Pointer Events, Web Audio and native dialogs. Landscape offers a larger play area; portrait remains playable with controls anchored near the bottom corners. The canvas retains its 12:7 aspect ratio and accounts for dynamic viewport height and safe areas. Sound may require an initial user gesture.
+
+Headless Chrome checks cover desktop and phone viewport sizes, including multitouch. Real Android/iPhone devices, Safari/Firefox and sustained performance on physical mid-range phones have not been verified. The HUD becomes small on narrow portrait screens. Landscape is recommended. The original third map remains challenging, so the first three stages are not a perfectly smooth difficulty ramp.
+
+## Deploy with GitHub Pages
+
+Keep the existing static deployment: repository **Settings ? Pages ? Deploy from a branch**, choose the publishing branch and the **/docs** folder. All runtime paths are relative; no Node installation, backend, build process or API key is needed on the host. Only `docs/` is needed to serve the browser game. Publishing is a separate action; local checks do not push or deploy anything.
+
+## Validation and development
+
+```sh
 python -m unittest -v
-```
-
-The suite checks physics, collisions, jumping assists, hazards, enemies, scoring, game flow, rendering, sound generation, level validation, and recorded playability runs. To also run the slower live solver test:
-
-```bash
-RUN_SLOW_TESTS=1 python -m unittest -v
-```
-
-On PowerShell, set the variable first with `$env:RUN_SLOW_TESTS = "1"`.
-
-The browser edition is static and dependency-free. Its JavaScript can be syntax-checked with:
-
-```bash
+python tools/export_levels.py --check
+node --test tests/browser.test.mjs
 node --check docs/js/game.js
 ```
 
-## Editing levels
+The Python suite tests maps, physics, collisions, scoring, recorded winning routes, UI, rendering and audio. The Node suite validates all maps/assets, input aliases and independent sources, pointer capture/cancellation, persistence, moving platforms, hazards, ice and recorded winning routes in the actual browser physics.
 
-Desktop levels are defined as 14-row text maps in `levels.py`. The browser port mirrors those maps in `docs/js/game.js`.
+Optional real-browser integration checks require a locally installed Chrome/Edge and the test-only Python `websockets` package:
 
-| Symbol | Meaning |
-|---|---|
-| `.` | Empty space |
-| `#` | Solid ground or platform |
-| `o` | Coin |
-| `^` | Spikes |
-| `E` | Walking enemy |
-| `P` | Player start (exactly one) |
-| `F` | Goal flag (exactly one) |
+```sh
+python -m pip install websockets
+python tools/browser_smoke.py
+```
 
-After changing Python levels, run `python solver.py` to regenerate playable runs, then run the test suite. Mirror intentional map changes into the web edition so both versions remain aligned.
+This launches a temporary headless browser and local HTTP server, checks four viewport sizes, keyboard, two-finger movement/jump, cancellation, pause/restart, locks and winning routes, and writes `screenshots/browser-mobile.png`. It does not alter your normal browser profile.
+
+Edit canonical tile definitions and browser feature metadata in `levels.py`, then export:
+
+```sh
+python tools/export_levels.py
+python solver.py
+node tools/solve_browser.mjs
+```
+
+The two solvers use their respective real physics and write recorded runs to `replays.json` and `tests/browser-replays.json`. Browser physics includes dynamic features and has separate recordings. Automated completion demonstrates a possible route, not that every route or collectible is reachable or that every human player will find the stages comfortable. The slower live Python solver check can be enabled with `RUN_SLOW_TESTS=1` (`$env:RUN_SLOW_TESTS = "1"` in PowerShell).
 
 ## Project structure
 
-```text
-docs/
-  index.html       GitHub Pages entry point
-  css/style.css    Responsive page, overlays, and touch controls
-  js/game.js       Canvas renderer, game rules, input, and Web Audio
-platformer.py      Desktop rendering, menus, controls, and sound
-world.py           Testable desktop physics and game rules
-levels.py          Desktop level maps
-solver.py          Automated level playability solver
-replays.json       Recorded winning runs used by tests
-test_platformer.py Python automated tests
-requirements.txt  Desktop dependency
-screenshots/       Desktop screenshots
-```
+| File | Purpose |
+| --- | --- |
+| `docs/index.html`, `docs/css/style.css` | Browser entry, menus, responsive styling and controls |
+| `docs/js/game.js` | Browser rendering, audio, camera and session flow |
+| `docs/js/world.js` | Browser collisions, physics and dynamic features |
+| `docs/js/input.js`, `docs/js/progress.js` | Multisource input and resilient browser saves |
+| `docs/js/levels.js` | Generated browser maps; do not edit directly |
+| `levels.py`, `tools/export_levels.py` | Canonical maps and browser exporter |
+| `platformer.py`, `world.py` | Existing pygame interface and desktop physics |
+| `solver.py`, `tools/solve_browser.mjs` | Real-physics route solvers |
+| `test_platformer.py`, `tests/`, `tools/browser_smoke.py` | Automated validation |
 
-## Implementation notes
+## Screenshots
 
-The browser edition closely follows the desktop constants and rules but is a JavaScript port rather than a Python runtime in the browser. Audio uses Web Audio oscillators instead of pygame's generated sample buffers. Browser high scores are stored per browser and origin, so they do not synchronize with the desktop `highscore.json` file or between devices.
+Browser portrait gameplay (captured by the integration check):
 
-## License and assets
+![Browser mobile gameplay](screenshots/browser-mobile.png)
 
-Coin Runner uses original geometric artwork generated by its own rendering code. No Nintendo or Mario artwork, audio, names, or other copyrighted franchise assets are included. Review and add an explicit repository license before redistributing the source if the project does not already have one.
+Original desktop edition (legacy level names/themes):
+
+![Desktop menu](screenshots/menu.png)
+![Original meadow](screenshots/level1-meadow.png)
+![Original caves](screenshots/level2-caves.png)
+![Original sky route](screenshots/level3-sky.png)
+
+## Assets and licensing
+
+Artwork consists of original shapes drawn in code; audio is synthesized at runtime. No Nintendo sprites, music or branding are included. The repository does not currently declare a source license; add an appropriate license before distributing it under specific terms.

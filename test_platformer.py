@@ -59,10 +59,10 @@ def run(w, frames, move=0, jump_first=False, held=False):
 
 
 class LevelTests(unittest.TestCase):
-    def test_there_are_three_levels(self):
-        self.assertEqual(len(levels.LEVELS), 3)
+    def test_there_are_ten_levels(self):
+        self.assertEqual(len(levels.LEVELS), 10)
         names = [level["name"] for level in levels.LEVELS]
-        self.assertEqual(len(set(names)), 3)
+        self.assertEqual(len(set(names)), 10)
 
     def test_every_level_is_valid(self):
         for level in levels.LEVELS:
@@ -305,6 +305,28 @@ class PlayabilityTests(unittest.TestCase):
             w = solver.replay(index, recorded[level["name"]])
             self.assertEqual(w.status, "complete",
                              f"{level['name']} changed and the recorded run no longer finishes it. Run: python solver.py")
+
+    def test_full_campaign_carries_score_and_lives(self):
+        with open(solver.REPLAY_FILE, encoding="utf-8") as file:
+            recorded = json.load(file)
+        score, lives = 0, W.START_LIVES
+        for level in levels.LEVELS:
+            w = W.World(level["rows"], score=score, lives=lives)
+            for count, move, pressed, held in recorded[level["name"]]:
+                for i in range(count):
+                    w.update(DT, move, bool(pressed) and i == 0, bool(held))
+            self.assertEqual(w.status, "complete", level["name"])
+            self.assertGreater(w.score, score)
+            score, lives = w.score, w.lives
+
+    def test_flag_restores_one_life_without_exceeding_cap(self):
+        w = settled()
+        w.lives = 1
+        w.complete_level()
+        self.assertEqual(w.lives, 2)
+        w = settled()
+        w.complete_level()
+        self.assertEqual(w.lives, W.START_LIVES)
 
     @unittest.skipUnless(os.environ.get("RUN_SLOW_TESTS"), "slow: set RUN_SLOW_TESTS=1 to run the solver live")
     def test_solver_can_finish_every_level_live(self):
