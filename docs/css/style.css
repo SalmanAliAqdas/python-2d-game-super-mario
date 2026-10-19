@@ -175,3 +175,74 @@ dialog form { position: relative; padding: clamp(24px, 6vw, 48px); }
   .panel { text-align: center; }
   .button-row { justify-content: center; flex-wrap: wrap; }
 }
+
+.mobile-menu-button, .mobile-fullscreen, .fullscreen-status { display: none; }
+
+/* Phone presentation only. Keep the desktop rules and canvas coordinates intact. */
+@media (pointer: coarse) and (max-width: 1100px), (max-width: 620px) {
+  body { --viewport-height: 100vh; }
+  @supports (height: 100dvh) { body { --viewport-height: 100dvh; } }
+  body { padding: max(4px, env(safe-area-inset-top)) max(4px, env(safe-area-inset-right)) max(4px, env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left)); }
+  .game-shell {
+    --screen-height: calc(var(--viewport-height) - max(4px, env(safe-area-inset-top)) - max(4px, env(safe-area-inset-bottom)));
+    width: 100%;
+  }
+  .game-header { position: relative; height: 44px; margin: 0 0 6px; }
+  .game-header > div:first-child { display: none; }
+  .mobile-menu-button {
+    display: block; position: fixed;
+    top: max(4px, env(safe-area-inset-top)); right: max(4px, env(safe-area-inset-right));
+    z-index: 9; min-height: 44px;
+  }
+  .header-actions { gap: 6px; width: auto; }
+  .header-actions > :not(#pauseButton) { display: none; }
+  .header-actions #pauseButton {
+    position: fixed; top: max(4px, env(safe-area-inset-top)); left: max(4px, env(safe-area-inset-left));
+    z-index: 9; min-height: 44px;
+  }
+  .mobile-menu-button, .header-actions #pauseButton { background: rgba(17,26,56,.88); padding: .5rem .65rem; font-size: .8rem; }
+  .mobile-menu-open .header-actions {
+    display: grid; grid-template-columns: 1fr 1fr; position: fixed; z-index: 8;
+    top: calc(max(4px, env(safe-area-inset-top)) + 50px); right: max(4px, env(safe-area-inset-right));
+    width: min(320px, calc(100% - 8px)); max-height: calc(var(--screen-height) - 56px);
+    overflow-y: auto; padding: 12px; border: 1px solid #596588; border-radius: 16px;
+    background: #111a38; box-shadow: 0 12px 32px #0008;
+  }
+  .mobile-menu-open .header-actions > :not(#pauseButton) { display: block; }
+  .mobile-menu-open .header-actions .icon-button { min-height: 44px; font-size: .85rem; padding: .5rem; }
+  .mobile-menu-open .fullscreen-status { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.4; text-align: left; }
+  .fullscreen-status:empty { display: none !important; }
+  .mobile-fullscreen:disabled { opacity: .55; cursor: default; }
+  .mobile-controls {
+    display: flex; padding: 0;
+    bottom: max(6px, env(safe-area-inset-bottom));
+    left: max(6px, env(safe-area-inset-left)); right: max(6px, env(safe-area-inset-right));
+  }
+  .direction-pad { gap: 8px; }
+  .touch-button { width: 60px; height: 56px; border-radius: 16px; background: rgba(45,65,110,.65); }
+  .jump-button { width: 72px; background: rgba(255,213,47,.72); }
+  .orientation-tip { display: block; padding: 0 8px; }
+  footer { display: none; }
+  .stage { border-radius: 10px; }
+  dialog { max-height: calc(var(--viewport-height) - 16px); }
+}
+
+@media (pointer: coarse) and (max-width: 1100px) and (orientation: landscape), (max-width: 620px) and (orientation: landscape) {
+  .game-shell {
+    --play-height: calc(var(--screen-height) - 68px);
+    height: var(--screen-height); display: grid; grid-template-rows: minmax(0, 1fr) 68px;
+  }
+  .game-header { position: absolute; height: 0; margin: 0; }
+  .stage { grid-area: 1 / 1; place-self: center; width: min(calc(100% - 136px), calc((var(--play-height) - 2px) * 12 / 7 + 2px)); }
+  .orientation-tip { display: none; }
+  .overlay { padding: 8px; }
+  .panel { padding: 12px 16px; }
+  .panel .eyebrow, .panel .best-score { display: none; }
+}
+
+/* Wide phones have room for thumb controls beside a nearly full-height canvas. */
+@media (pointer: coarse) and (max-width: 1100px) and (orientation: landscape) and (min-aspect-ratio: 2/1), (max-width: 620px) and (orientation: landscape) and (min-aspect-ratio: 2/1) {
+  .game-shell { --play-height: var(--screen-height); grid-template-rows: 1fr; }
+  .stage { width: min(calc(100% - 184px), calc((var(--play-height) - 2px) * 12 / 7 + 2px)); }
+  .direction-pad { flex-direction: column; }
+}

@@ -1,0 +1,512 @@
+{
+  "1280x800": {
+    ".game-shell": {
+      "x": 72.5,
+      "y": 36,
+      "width": 1120,
+      "height": 778.71875,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".game-header": {
+      "x": 72.5,
+      "y": 36,
+      "width": 1120,
+      "height": 75.5625,
+      "display": "flex",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".stage": {
+      "x": 72.5,
+      "y": 125.5625,
+      "width": 1120,
+      "height": 654.15625,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "28px"
+    },
+    "canvas": {
+      "x": 73.5,
+      "y": 126.5625,
+      "width": 1118,
+      "height": 652.15625,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    "footer": {
+      "x": 72.5,
+      "y": 779.71875,
+      "width": 1120,
+      "height": 35,
+      "display": "flex",
+      "fontSize": "13.12px",
+      "padding": "18px 8px 0px",
+      "borderRadius": "0px"
+    },
+    "#pauseButton": {
+      "x": 730.734375,
+      "y": 49.484375,
+      "width": 84.953125,
+      "height": 48.59375,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "12.8px 18.4px",
+      "borderRadius": "999px"
+    },
+    "#restartButton": {
+      "x": 825.6875,
+      "y": 49.484375,
+      "width": 95.6875,
+      "height": 48.59375,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "12.8px 18.4px",
+      "borderRadius": "999px"
+    },
+    "[data-control=left]": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=right]": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=jump]": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "display": "inline-block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    }
+  },
+  "667x375": {
+    ".game-shell": {
+      "x": 119.21875,
+      "y": 4,
+      "width": 428.5625,
+      "height": 302.828125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".game-header": {
+      "x": 119.21875,
+      "y": 4,
+      "width": 428.5625,
+      "height": 44,
+      "display": "flex",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".stage": {
+      "x": 119.21875,
+      "y": 56,
+      "width": 428.5625,
+      "height": 250.828125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "14px"
+    },
+    "canvas": {
+      "x": 120.21875,
+      "y": 57,
+      "width": 426.5625,
+      "height": 248.828125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    "footer": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "display": "none",
+      "fontSize": "13.12px",
+      "padding": "18px 8px 0px",
+      "borderRadius": "0px"
+    },
+    "#pauseButton": {
+      "x": 215.640625,
+      "y": 4,
+      "width": 54.4375,
+      "height": 44,
+      "display": "block",
+      "fontSize": "11.52px",
+      "padding": "8px 9.6px",
+      "borderRadius": "999px"
+    },
+    "#restartButton": {
+      "x": 274.078125,
+      "y": 4,
+      "width": 62.15625,
+      "height": 44,
+      "display": "block",
+      "fontSize": "11.52px",
+      "padding": "8px 9.6px",
+      "borderRadius": "999px"
+    },
+    "[data-control=left]": {
+      "x": 14,
+      "y": 307,
+      "width": 70,
+      "height": 56,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=right]": {
+      "x": 96,
+      "y": 307,
+      "width": 70,
+      "height": 56,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=jump]": {
+      "x": 553,
+      "y": 307,
+      "width": 100,
+      "height": 56,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    }
+  },
+  "844x390": {
+    ".game-shell": {
+      "x": 194.859375,
+      "y": 4,
+      "width": 454.28125,
+      "height": 317.828125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".game-header": {
+      "x": 194.859375,
+      "y": 4,
+      "width": 454.28125,
+      "height": 44,
+      "display": "flex",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".stage": {
+      "x": 194.859375,
+      "y": 56,
+      "width": 454.28125,
+      "height": 265.828125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "14px"
+    },
+    "canvas": {
+      "x": 195.859375,
+      "y": 57,
+      "width": 452.28125,
+      "height": 263.828125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    "footer": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "display": "none",
+      "fontSize": "13.12px",
+      "padding": "18px 8px 0px",
+      "borderRadius": "0px"
+    },
+    "#pauseButton": {
+      "x": 304.140625,
+      "y": 4,
+      "width": 54.4375,
+      "height": 44,
+      "display": "block",
+      "fontSize": "11.52px",
+      "padding": "8px 9.6px",
+      "borderRadius": "999px"
+    },
+    "#restartButton": {
+      "x": 362.578125,
+      "y": 4,
+      "width": 62.15625,
+      "height": 44,
+      "display": "block",
+      "fontSize": "11.52px",
+      "padding": "8px 9.6px",
+      "borderRadius": "999px"
+    },
+    "[data-control=left]": {
+      "x": 14,
+      "y": 322,
+      "width": 70,
+      "height": 56,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=right]": {
+      "x": 96,
+      "y": 322,
+      "width": 70,
+      "height": 56,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=jump]": {
+      "x": 730,
+      "y": 322,
+      "width": 100,
+      "height": 56,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    }
+  },
+  "915x412": {
+    ".game-shell": {
+      "x": 211.5,
+      "y": 4,
+      "width": 492,
+      "height": 339.828125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".game-header": {
+      "x": 211.5,
+      "y": 4,
+      "width": 492,
+      "height": 44,
+      "display": "flex",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".stage": {
+      "x": 211.5,
+      "y": 56,
+      "width": 492,
+      "height": 287.828125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "14px"
+    },
+    "canvas": {
+      "x": 212.5,
+      "y": 57,
+      "width": 490,
+      "height": 285.828125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    "footer": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "display": "none",
+      "fontSize": "13.12px",
+      "padding": "18px 8px 0px",
+      "borderRadius": "0px"
+    },
+    "#pauseButton": {
+      "x": 339.640625,
+      "y": 4,
+      "width": 54.4375,
+      "height": 44,
+      "display": "block",
+      "fontSize": "11.52px",
+      "padding": "8px 9.6px",
+      "borderRadius": "999px"
+    },
+    "#restartButton": {
+      "x": 398.078125,
+      "y": 4,
+      "width": 62.15625,
+      "height": 44,
+      "display": "block",
+      "fontSize": "11.52px",
+      "padding": "8px 9.6px",
+      "borderRadius": "999px"
+    },
+    "[data-control=left]": {
+      "x": 14,
+      "y": 344,
+      "width": 70,
+      "height": 56,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=right]": {
+      "x": 96,
+      "y": 344,
+      "width": 70,
+      "height": 56,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=jump]": {
+      "x": 801,
+      "y": 344,
+      "width": 100,
+      "height": 56,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    }
+  },
+  "390x844": {
+    ".game-shell": {
+      "x": 12,
+      "y": 12,
+      "width": 366,
+      "height": 375.796875,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".game-header": {
+      "x": 12,
+      "y": 12,
+      "width": 366,
+      "height": 126.46875,
+      "display": "flex",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    ".stage": {
+      "x": 12,
+      "y": 146.46875,
+      "width": 366,
+      "height": 214.328125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "14px"
+    },
+    "canvas": {
+      "x": 13,
+      "y": 147.46875,
+      "width": 364,
+      "height": 212.328125,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "0px"
+    },
+    "footer": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "display": "none",
+      "fontSize": "13.12px",
+      "padding": "18px 8px 0px",
+      "borderRadius": "0px"
+    },
+    "#pauseButton": {
+      "x": 143.953125,
+      "y": 44.46875,
+      "width": 62.953125,
+      "height": 44,
+      "display": "block",
+      "fontSize": "12.48px",
+      "padding": "10.4px 12.48px",
+      "borderRadius": "999px"
+    },
+    "#restartButton": {
+      "x": 212.90625,
+      "y": 44.46875,
+      "width": 71.328125,
+      "height": 44,
+      "display": "block",
+      "fontSize": "12.48px",
+      "padding": "10.4px 12.48px",
+      "borderRadius": "999px"
+    },
+    "[data-control=left]": {
+      "x": 14,
+      "y": 760,
+      "width": 76,
+      "height": 72,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=right]": {
+      "x": 102,
+      "y": 760,
+      "width": 76,
+      "height": 72,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    },
+    "[data-control=jump]": {
+      "x": 276,
+      "y": 760,
+      "width": 100,
+      "height": 72,
+      "display": "block",
+      "fontSize": "16px",
+      "padding": "0px",
+      "borderRadius": "18px"
+    }
+  }
+}

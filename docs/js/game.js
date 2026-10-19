@@ -2,6 +2,7 @@ import { World } from './world.js';
 import { LEVELS } from './levels.js';
 import { Input, CONTROL_KEYS, bindPointers } from './input.js';
 import { Progress } from './progress.js';
+import { initMobileLayout } from './mobile-layout.js';
 const canvas = document.querySelector('#gameCanvas');
 const ctx = canvas.getContext('2d');
 const overlay = document.querySelector('#overlay');
@@ -80,7 +81,7 @@ document.querySelector('#resetButton').addEventListener('click', () => {
 document.querySelector('#pauseButton').addEventListener('click',pause);
 document.querySelector('#restartButton').addEventListener('click',()=>{if(state==='playing'||state==='paused')restartLevel();});
 addEventListener('keydown', e => {
-  if(helpDialog.open || levelDialog.open) return;
+  if(helpDialog.open || levelDialog.open || document.body.classList.contains('mobile-menu-open')) return;
   if(e.target.closest?.('button') && (e.code==='Space'||e.code==='Enter')) return;
   if(CONTROL_KEYS[e.code] && state==='playing') {
     e.preventDefault(); input.down(`key:${e.code}`,CONTROL_KEYS[e.code]);
@@ -94,6 +95,7 @@ function suspend() {clearInput();if(state==='playing')pause();}
 addEventListener('blur',suspend);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)suspend();});
 bindPointers(document.querySelectorAll('[data-control]'),input,()=>state==='playing');
+initMobileLayout(() => { clearInput(); if(state==='playing')pause(); });
 
 function tone(name){if(muted)return;const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;audioContext??=new Audio();if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});const recipes={jump:[[330,.05],[440,.07]],coin:[[880,.05],[1320,.09]],stomp:[[200,.05],[140,.08]],hurt:[[330,.08],[220,.08],[140,.12]],complete:[[523,.1],[659,.1],[784,.1],[1047,.2]]};let at=audioContext.currentTime;for(const[f,d]of recipes[name]){const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='square';o.frequency.value=f;g.gain.setValueAtTime(.055,at);g.gain.exponentialRampToValueAtTime(.001,at+d);o.connect(g).connect(audioContext.destination);o.onended=()=>{o.disconnect();g.disconnect();};o.start(at);o.stop(at+d);at+=d;}}
 

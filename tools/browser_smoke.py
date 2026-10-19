@@ -93,16 +93,16 @@ with tempfile.TemporaryDirectory(prefix="coin-runner-chrome-") as profile:
             js("document.querySelector('#levelsButton').click()")
             check("document.querySelectorAll('#levelGrid button').length===10 && document.querySelectorAll('#levelGrid button:disabled').length===9")
             js("document.querySelector('#levelDialog').close();document.querySelector('#primaryButton').click()")
-            for width, height in [(1280,800),(390,844),(844,390),(320,568)]:
-                call("Emulation.setDeviceMetricsOverride", dict(width=width,height=height,deviceScaleFactor=1,mobile=width<900))
-                call("Emulation.setTouchEmulationEnabled", dict(enabled=width<900,maxTouchPoints=5))
+            for width, height in [(1280,800),(667,375),(844,390),(915,412),(390,844)]:
+                call("Emulation.setDeviceMetricsOverride", dict(width=width,height=height,deviceScaleFactor=1,mobile=width<1100))
+                call("Emulation.setTouchEmulationEnabled", dict(enabled=width<1100,maxTouchPoints=5))
                 time.sleep(.1)
                 check("document.documentElement.scrollWidth <= innerWidth")
                 check("Math.abs(document.querySelector('canvas').getBoundingClientRect().width/document.querySelector('canvas').getBoundingClientRect().height-12/7)<.02")
-                if width<900:
+                if width<1100:
                     js("document.querySelector('#restartButton').click()")
                     time.sleep(.05)
-                    check("[...document.querySelectorAll('[data-control],#pauseButton,#restartButton')].every(b=>{const r=b.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.top>=0&&r.bottom<=innerHeight})")
+                    check("[...document.querySelectorAll('[data-control],#pauseButton,#mobileMenuButton')].every(b=>{const r=b.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.top>=0&&r.bottom<=innerHeight})")
                     points=js("['right','jump'].map(name=>{const r=document.querySelector(`[data-control=${name}]`).getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})")
                     call("Input.dispatchTouchEvent", dict(type="touchStart",touchPoints=[dict(id=i+1,**point) for i,point in enumerate(points)]))
                     time.sleep(.08)
@@ -140,7 +140,7 @@ with tempfile.TemporaryDirectory(prefix="coin-runner-chrome-") as profile:
             js("document.querySelector('#levelsButton').click()")
             check("document.querySelectorAll('#levelGrid button:disabled').length===0")
             assert not errors, errors
-            print("PASS: Chrome, 4 viewports, two-finger controls/cancel, keyboard, pause/restart, locks, final victory/progression, 10 winning routes; no JS exceptions.")
+            print("PASS: Chrome, 5 viewports, two-finger controls/cancel, keyboard, pause/restart, locks, final victory/progression, 10 winning routes; no JS exceptions.")
     finally:
         proc.terminate()
         proc.wait(timeout=15)

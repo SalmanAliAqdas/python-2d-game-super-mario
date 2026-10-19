@@ -53,10 +53,10 @@ The original three tile layouts are preserved exactly. Their display names/theme
 | Move | Left / A, Right / D | Hold the left or right arrow at bottom left |
 | Jump | Space / Up / W; hold for height | Hold Jump at bottom right, together with movement |
 | Pause / Resume | P / Escape | Pause above the game, then Resume |
-| Restart level | Browser Restart button; desktop R while paused | Restart above the game or in the pause panel |
-| Select unlocked level | Browser Levels button | Levels above the game |
-| Sound | M or Sound button | Sound button |
-| Help | Browser How to play; desktop H | How to play |
+| Restart level | Browser Restart button; desktop R while paused | Menu > Restart, or Restart in the pause panel |
+| Select unlocked level | Browser Levels button | Menu > Levels |
+| Sound | M or Sound button | Menu > Sound |
+| Help | Browser How to play; desktop H | Menu > How to play |
 
 Pointer capture tracks each finger independently, including release outside a button, cancellation and lost capture. Pausing, opening a menu, hiding the page or losing focus clears held inputs. Control buttons suppress scrolling and touch gestures locally; browser zoom is not globally disabled. Snow retains physical momentum briefly after input is released.
 
@@ -69,6 +69,10 @@ The browser saves unlocked levels and best score in `localStorage`, per browser 
 ## Browser compatibility and layout
 
 Targets modern Android Chrome, iPhone Safari, Chrome, Edge and Firefox with Canvas, ES modules, Pointer Events, Web Audio and native dialogs. Landscape offers a larger play area; portrait remains playable with controls anchored near the bottom corners. The canvas retains its 12:7 aspect ratio and accounts for dynamic viewport height and safe areas. Sound may require an initial user gesture.
+
+Phone landscape layout fits the full canvas into the available dynamic viewport without changing its 960x560 backing resolution. Wide phones place controls in side strips; narrower phones use a bottom strip. Pause and Menu stay outside the canvas. Menu contains Levels, Restart, Sound, Help and a Fullscreen option. Fullscreen uses the standard browser API when supported and requested by a tap; unsupported or denied requests leave the normal responsive layout available. No orientation lock is requested. Portrait mode displays a friendly rotation suggestion while remaining playable.
+
+Before/after captures for 667x375, 844x390, 915x412, portrait 390x844 and desktop 1280x800 are in `screenshots/layout-*.png`. The optional `python tools/layout_smoke.py --capture after` check compares against the saved baseline and exercises menu/fullscreen fallbacks. Physical device browser chrome and safe areas still require real-device verification.
 
 Headless Chrome checks cover desktop and phone viewport sizes, including multitouch. Real Android/iPhone devices, Safari/Firefox and sustained performance on physical mid-range phones have not been verified. The HUD becomes small on narrow portrait screens. Landscape is recommended. The original third map remains challenging, so the first three stages are not a perfectly smooth difficulty ramp.
 
